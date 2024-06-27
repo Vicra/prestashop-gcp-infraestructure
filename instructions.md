@@ -7,33 +7,39 @@ App name: test-ecommerce
 Database name: test-database
 
 ## Create a network for containers to communicate
-docker network create prestashop-network
+
+	docker network create prestashop-network
 
 ## If using M1 or M2 chip, Enable the linux platform
-docker pull --platform linux/x86_64 mysql (not sure if its required)
-docker pull --platform linux/x86_64/v8 mysql
+
+	docker pull --platform linux/x86_64 mysql (not sure if its required)
+
+	docker pull --platform linux/x86_64/v8 mysql
 
 ## Export default platform
-export DOCKER_DEFAULT_PLATFORM=linux/x86_64/v8
-export DOCKER_DEFAULT_PLATFORM=linux/amd64 (not sure if its required)
+
+	export DOCKER_DEFAULT_PLATFORM=linux/x86_64/v8
+
+	export DOCKER_DEFAULT_PLATFORM=linux/amd64 (not sure if its required)
 
 ## Launch mysql 5.7 container
-docker run 
-  -ti 
-  --name [test-database]
-  --network prestashop-network  
-  -e MYSQL_ROOT_PASSWORD=admin 
-  -p 3307:3306 
-  -d mysql:5.7
+	docker run 
+  		-ti 
+  		--name [test-database]
+  		--network prestashop-network  
+  		-e MYSQL_ROOT_PASSWORD=admin 
+  		-p 3307:3306 
+  		-d mysql:5.7
 
 ## launch prestashop container
-docker run 
-  -ti 
-  --name [test-ecommerce]
-  --network [prestashop-network]
-  -e DB_SERVER=[test-database]
-  -p 8080:80 
-  -d prestashop/prestashop:latest
+
+	docker run 
+  		-ti 
+  		--name [test-ecommerce]
+  		--network [prestashop-network]
+  		-e DB_SERVER=[test-database]
+  		-p 8080:80 
+  		-d prestashop/prestashop:latest
 
 Go to workbench and create the schema
 prestashop
