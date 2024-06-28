@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  techdeals-db:
+    image: mysql:5.7
+    container_name: techdeals-db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    networks:
+      - prestashop-network
+
+  techdeals-prestashop:
+    image: prestashop/prestashop:latest
+    container_name: techdeals-prestashop
+    environment:
+      DB_SERVER: techdeals-db
+    ports:
+      - "8080:80"
+    networks:
+      - prestashop-network
+    command: > 
+      bash -c "rm -rf /var/www/html/install
+      && mv /var/www/html/admin /var/www/html/admin-techdeals-prestashop"
+
+networks:
+  prestashop-network:
+    driver: bridge
