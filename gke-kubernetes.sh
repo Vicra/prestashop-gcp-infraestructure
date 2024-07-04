@@ -20,6 +20,12 @@ gcloud artifacts repositories create prestashops-repo \
 # build docker image
 docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/prestashop/prestashop:latest .
 
+# Configure the Docker command-line tool to authenticate to Artifact Registry:
+gcloud auth configure-docker REGION-docker.pkg.dev
+
+# Push the Docker image that you just built to the repository
+docker push REGION-docker.pkg.dev/${PROJECT_ID}/hello-repo/hello-app:v1
+
 
 references links:
 - https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app
